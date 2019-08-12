@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+#Django backend server
+  server:
+    build: ./backend
+    expose:
+      - 8000
+    ports: 8000:8000
+
+#React frontend server
+  client:
+    build: ./backend
+    expose:
+      - 5000
+    ports:
+      - 5000:5000
+    command: npm start
