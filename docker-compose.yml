@@ -1,18 +1,27 @@
 version: '3'
 
 services:
-#Django backend server
+  db:
+    image: postgres
+
   server:
     build: ./backend
-    expose:
-      - 8000
-    ports: 8000:8000
-
-#React frontend server
-  client:
-    build: ./backend
-    expose:
-      - 5000
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/code
     ports:
-      - 5000:5000
+      - "8000:8000"
+    depends_on:
+      - db
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:3000"
+    volumes:
+      - ./frontend/src:/var/node/src
+      - ./frontend/public:/var/node/public
+    links: 
+      - server
     command: npm start
+    depends_on:
+      - server

@@ -1,8 +1,7 @@
 #Create image for React server
 FROM node:latest
 RUN mkdir -p /var/node
-ADD . /var/node/
+COPY package*.json /var/node/
 WORKDIR /var/node
 RUN npm install
-EXPOSE 3000
-CMD npm start
+COPY . /var/node

@@ -33,5 +33,6 @@
   },
   "devServer": {
     "disableHostCheck": true
-  }
+  },
+  "proxy": "http://server:8000"
 }
