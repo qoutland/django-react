@@ -41,13 +41,11 @@ class App extends Component {
       axios
         .put(`/api/todos/${item.id}/`, item)
         .then(res => this.refreshList());
-        alert('POST');
       return
     }
     axios
     .post('/api/todos/', item)
     .then(res => this.refreshList());
-    alert('POST');
   }
 
   handleDelete = item => {
