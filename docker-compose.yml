@@ -1,22 +1,38 @@
-version: '3'
+version: '3.7'
 
 services:
   db:
     image: postgres
 
+  minio:
+    image: minio/minio
+    ports:
+      - 9000:9000
+    volumes:
+      - minio-data:/export
+    environment:
+      MINIO_ACCESS_KEY: AKIAIOSFODNN7EXAMPLE
+      MINIO_SECRET_KEY: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+    command: server start object storage server
+    
   server:
     build: ./backend
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    image: qoutland/django-react_backend
+    command: sh -c "python manage.py migrate && python manage.py collectstatic --no-input && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./backend:/code
     ports:
       - "8000:8000"
     links:
       - db
+      - minio
     depends_on:
       - db
+      - minio
+
   frontend:
     build: ./frontend
+    image: qoutland/django-react_frontend
     ports:
       - "80:3000"
     volumes:
@@ -27,3 +43,6 @@ services:
     command: npm start
     depends_on:
       - server
+
+volumes:
+  minio-data:

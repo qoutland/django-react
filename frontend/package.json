@@ -34,5 +34,5 @@
   "devServer": {
     "disableHostCheck": true
   },
-  "proxy": "http://server:8000"
+  "proxy": "http://backend:8000"
 }
