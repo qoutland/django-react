@@ -19,5 +19,5 @@ setuptools-scm==3.3.3
 singledispatch==3.4.0.3
 six==1.12.0
 sqlparse==0.3.0
-urllib3==1.25.3
+urllib3==1.25.8
 yapf==0.28.0
